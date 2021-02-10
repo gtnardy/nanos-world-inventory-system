@@ -2,9 +2,9 @@ Package:RequirePackage("NanosWorldWeapons")
 
 
 -- Triggers when the Character drops the holding Item
-Character:on("Drop", function(character, object, bWasTriggeredByPlayer)
+Character:on("Drop", function(character, object, was_triggered_by_player)
 	-- If it was not the player which dropped intentionally (e.g. pressing G), then probably it was 'dropped' because he's switching the inventory item
-	if (not bWasTriggeredByPlayer) then
+	if (not was_triggered_by_player) then
 		-- Destroys the item to simulate it being stored in the inventory
 		if (object:IsValid() and not object:GetValue("IsBeingSwitched")) then
 			object:Destroy()

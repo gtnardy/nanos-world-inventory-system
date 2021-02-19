@@ -2,7 +2,7 @@ Package:RequirePackage("NanosWorldWeapons")
 
 
 -- Triggers when the Character drops the holding Item
-Character:on("Drop", function(character, object, was_triggered_by_player)
+Character:Subscribe("Drop", function(character, object, was_triggered_by_player)
 	-- If it was not the player which dropped intentionally (e.g. pressing G), then probably it was 'dropped' because he's switching the inventory item
 	if (not was_triggered_by_player) then
 		-- Destroys the item to simulate it being stored in the inventory
@@ -22,7 +22,7 @@ Character:on("Drop", function(character, object, was_triggered_by_player)
 end)
 
 -- Triggers when a character tries to 'PickUp' any Weapon/Item/Granade
-Character:on("Interact", function(character, object)
+Character:Subscribe("Interact", function(character, object)
 	-- Gets the AssetName (a.k.a. Item Key/ID)
 	local AssetName = object:GetAssetName()
 
@@ -62,7 +62,7 @@ Character:on("Interact", function(character, object)
 end)
 
 -- Triggers when the Character actively picks up a new Item from the ground or when a new item is given to him
-Character:on("PickUp", function(character, object)
+Character:Subscribe("PickUp", function(character, object)
 	-- Gets the AssetName (a.k.a. Item Key/ID) and checks if it does exists any InventoryItem with that ID
 	local inventory_item = InventoryItems[object:GetAssetName()]
 	if (not inventory_item) then
@@ -143,7 +143,7 @@ function RemoveInventoryItem(player, slot, keep_if_holding)
 end
 
 -- Called from remote when a Player wants to switch it's inventory item
-Events:on("SwitchInventoryItem", function(player, inventory_slot)
+Events:Subscribe("SwitchInventoryItem", function(player, inventory_slot)
 	local current_inventory_item_slot = player:GetValue("CurrentInventoryItemSlot")
 
 	-- If the player is already with that item in hands, does nothing

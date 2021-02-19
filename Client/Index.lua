@@ -22,22 +22,22 @@ InventoryKeyBinding = {
 }
 
 -- When package loads, verify if LocalPlayer already exists (eg. when reloading the package), then try to get and store it's controlled character
-Package:on("Load", function()
+Package:Subscribe("Load", function()
 	-- Creates a WebUI for the Inventory
 	WeaponHUD = WebUI("InventoryHUD", "file:///UI/index.html")
 
-	WeaponHUD:on("Ready", function()
+	WeaponHUD:Subscribe("Ready", function()
 		IsUIReady = true
 		SetupUI()
 	end)
 end)
 
-Package:on("Unload", function()
+Package:Subscribe("Unload", function()
 	WeaponHUD:Destroy()
 end)
 
 -- Catches KeyUp event to see if it was pressed any Inventory Shortcut key
-Client:on("KeyUp", function(KeyName)
+Client:Subscribe("KeyUp", function(KeyName)
 	local slot = -1
 
 	if (InventoryKeyBinding[KeyName]) then
@@ -55,18 +55,18 @@ Client:on("KeyUp", function(KeyName)
 	end
 end)
 
-Events:on("SwitchedInventoryItem", function(slot)
+Events:Subscribe("SwitchedInventoryItem", function(slot)
 	WeaponHUD:CallEvent("SwitchedInventoryItem", {slot})
 end)
 
--- When LocalPlayer spawns, sets an event on it to trigger when we possesses a new character, to store the local controlled character locally. This event is only called once, see Package:on("Load") to load it when reloading a package
-NanosWorld:on("SpawnLocalPlayer", function(local_player)
+-- When LocalPlayer spawns, sets an event on it to trigger when we possesses a new character, to store the local controlled character locally. This event is only called once, see Package:Subscribe("Load") to load it when reloading a package
+NanosWorld:Subscribe("SpawnLocalPlayer", function(local_player)
 	IsLocalPlayerReady = true
 	SetupUI()
 end)
 
 -- Receives a new item on the inventory
-Events:on("GiveInventoryItem", function(inventory_item_id)
+Events:Subscribe("GiveInventoryItem", function(inventory_item_id)
 	-- Gets if the item exists item from InventoryItems list
 	local InventoryItem = InventoryItems[inventory_item_id]
 
@@ -82,7 +82,7 @@ Events:on("GiveInventoryItem", function(inventory_item_id)
 end)
 
 -- Removes the item from inventory (called from server)
-Events:on("RemoveInventoryItem", function(slot)
+Events:Subscribe("RemoveInventoryItem", function(slot)
 	-- Gets my inventory, sets the item at slot to nil and saves it again
 	local inventory = NanosWorld:GetLocalPlayer():GetValue("Inventory") or {}
 	inventory[slot] = nil

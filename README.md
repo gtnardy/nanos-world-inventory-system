@@ -7,7 +7,7 @@ Keys 1 - 9 to switch Items, 0 to free hands. Picking up any Item will automatica
 ## Scripting
 ```lua
 -- Gives an AK47 Weapon to player (drops any other item which may be holding)
-GiveInventoryItem(player, "NanosWorld::SK_AK47")
+GiveInventoryItem(player, "nanos-world::SK_AK47")
 
 -- Removes an Item from player's inventory at slot 1, will Drop the item if currently holding it
 RemoveInventoryItem(player, 1)
@@ -18,7 +18,7 @@ If you want to add more Items/Weapons, just modify ``Shared/Index.lua`` and appe
 ```lua
 InventoryItems = {
 	...
-	["NanosWorld::MyCustomAsset"] = { -- Asset Name, used to indentify the Item/Weapon
+	["nanos-world::MyCustomAsset"] = { -- Asset Name, used to indentify the Item/Weapon
 		name = "Awesome Custom", -- Custom name to appear on the screen
 		image = "good_photo.png", -- Image path (inside UI/images/ folder)
 		spawn = function(pos) return Weapon(pos or Vector(), Rotator(), ...) end, -- Spawn function to spawn your object

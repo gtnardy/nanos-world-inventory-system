@@ -99,7 +99,7 @@ function SetupUI()
 	if (not IsUIReady or not IsLocalPlayerReady) then return end
 
 	-- Updates the UI with the already saved Inventory (in case of the Package is being reloaded)
-	local inventory = NanosWorld:GetLocalPlayer():GetValue("Inventory")
+	local inventory = Client.GetLocalPlayer():GetValue("Inventory")
 	if (inventory) then
 		for slot, data in pairs(inventory) do
 			WeaponHUD:CallEvent("AddInventoryItem", slot, InventoryItems[data.id].name, InventoryItems[data.id].image)

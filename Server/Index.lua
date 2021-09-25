@@ -1,4 +1,4 @@
-Package:RequirePackage("NanosWorldWeapons")
+Package:RequirePackage("nanos-world-weapons")
 
 
 -- Triggers when the Character drops the holding Item

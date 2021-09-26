@@ -60,7 +60,7 @@ Events.Subscribe("SwitchedInventoryItem", function(slot)
 end)
 
 -- When LocalPlayer spawns, sets an event on it to trigger when we possesses a new character, to store the local controlled character locally. This event is only called once, see Package.Subscribe("Load") to load it when reloading a package
-NanosWorld.Subscribe("SpawnLocalPlayer", function(local_player)
+Client.Subscribe("SpawnLocalPlayer", function(local_player)
 	IsLocalPlayerReady = true
 	SetupUI()
 end)
@@ -82,7 +82,7 @@ Events.Subscribe("GiveInventoryItem", function(inventory_item_id)
 end)
 
 -- Removes the item from inventory (called from server)
-Events:Subscribe("RemoveInventoryItem", function(slot)
+Events.Subscribe("RemoveInventoryItem", function(slot)
 	-- Gets my inventory, sets the item at slot to nil and saves it again
 	local inventory = Client.GetLocalPlayer():GetValue("Inventory") or {}
 	inventory[slot] = nil

@@ -1,8 +1,8 @@
-Package:RequirePackage("nanos-world-weapons")
+Package.RequirePackage("nanos-world-weapons")
 
 
 -- Triggers when the Character drops the holding Item
-Character:Subscribe("Drop", function(character, object, was_triggered_by_player)
+Character.Subscribe("Drop", function(character, object, was_triggered_by_player)
 	-- If it was not the player which dropped intentionally (e.g. pressing G), then probably it was 'dropped' because he's switching the inventory item
 	if (not was_triggered_by_player) then
 		-- Destroys the item to simulate it being stored in the inventory
@@ -22,7 +22,7 @@ Character:Subscribe("Drop", function(character, object, was_triggered_by_player)
 end)
 
 -- Triggers when a character tries to 'PickUp' any Weapon/Item/Granade
-Character:Subscribe("Interact", function(character, object)
+Character.Subscribe("Interact", function(character, object)
 	-- Gets the AssetName (a.k.a. Item Key/ID)
 	local AssetName = object:GetAssetName()
 
@@ -62,7 +62,7 @@ Character:Subscribe("Interact", function(character, object)
 end)
 
 -- Triggers when the Character actively picks up a new Item from the ground or when a new item is given to him
-Character:Subscribe("PickUp", function(character, object)
+Character.Subscribe("PickUp", function(character, object)
 	-- Gets the AssetName (a.k.a. Item Key/ID) and checks if it does exists any InventoryItem with that ID
 	local inventory_item = InventoryItems[object:GetAssetName()]
 	if (not inventory_item) then
@@ -81,7 +81,7 @@ Character:Subscribe("PickUp", function(character, object)
 	end
 
 	GiveInventoryItem(character:GetPlayer(), object:GetAssetName(), data)
-	Events:CallRemote("SwitchedInventoryItem", character:GetPlayer(), {inventory_item.slot})
+	Events.CallRemote("SwitchedInventoryItem", character:GetPlayer(), inventory_item.slot)
 
 	-- Checks if this item is currently being "switched"
 	local is_being_switched = object:GetValue("IsBeingSwitched")
@@ -120,7 +120,7 @@ function GiveInventoryItem(player, inventory_item_key, custom_data)
 	player:SetValue("Inventory", inventory)
 
 	-- Calls remote to update it on the client
-	Events:CallRemote("GiveInventoryItem", player, {inventory_item_key})
+	Events.CallRemote("GiveInventoryItem", player, inventory_item_key)
 end
 
 -- Removes an Item at given slot from a player
@@ -139,11 +139,11 @@ function RemoveInventoryItem(player, slot, keep_if_holding)
 	end
 
 	-- Calls remote to update it on the client
-	Events:CallRemote("RemoveInventoryItem", player, {slot})
+	Events.CallRemote("RemoveInventoryItem", player, slot)
 end
 
 -- Called from remote when a Player wants to switch it's inventory item
-Events:Subscribe("SwitchInventoryItem", function(player, inventory_slot)
+Events.Subscribe("SwitchInventoryItem", function(player, inventory_slot)
 	local current_inventory_item_slot = player:GetValue("CurrentInventoryItemSlot")
 
 	-- If the player is already with that item in hands, does nothing

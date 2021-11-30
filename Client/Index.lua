@@ -21,20 +21,10 @@ InventoryKeyBinding = {
 	["Zero"] = 0,
 }
 
--- When package loads, verify if LocalPlayer already exists (eg. when reloading the package), then try to get and store it's controlled character
-Package.Subscribe("Load", function()
-	-- Creates a WebUI for the Inventory
-	WeaponHUD = WebUI("InventoryHUD", "file:///UI/index.html")
+-- Creates a WebUI for the Inventory
+WeaponHUD = WebUI("InventoryHUD", "file:///UI/index.html")
 
-	WeaponHUD:Subscribe("Ready", function()
-		IsUIReady = true
-		SetupUI()
-	end)
-end)
-
-Package.Subscribe("Unload", function()
-	WeaponHUD:Destroy()
-end)
+SetupUI()
 
 -- Catches KeyUp event to see if it was pressed any Inventory Shortcut key
 Client.Subscribe("KeyUp", function(KeyName)
@@ -96,7 +86,7 @@ end)
 
 -- Function to Setup the UI when everything is ready (WebUI and LocalPlayer)
 function SetupUI()
-	if (not IsUIReady or not IsLocalPlayerReady) then return end
+	if (not IsLocalPlayerReady) then return end
 
 	-- Updates the UI with the already saved Inventory (in case of the Package is being reloaded)
 	local inventory = Client.GetLocalPlayer():GetValue("Inventory")
@@ -105,6 +95,4 @@ function SetupUI()
 			WeaponHUD:CallEvent("AddInventoryItem", slot, InventoryItems[data.id].name, InventoryItems[data.id].image)
 		end
 	end
-
-	Events.CallRemote("RemotePlayerReady")
 end

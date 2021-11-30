@@ -1,4 +1,4 @@
-Events.on("SwitchedInventoryItem", function(slot) {
+Events.Subscribe("SwitchedInventoryItem", function(slot) {
 	let inventory_item = $(".inventory_item").eq(9 - slot);
 
 	$(".inventory_item").removeClass("enabled");
@@ -7,7 +7,7 @@ Events.on("SwitchedInventoryItem", function(slot) {
 		inventory_item.addClass("enabled");
 });
 
-Events.on("AddInventoryItem", function(slot, name, image) {
+Events.Subscribe("AddInventoryItem", function(slot, name, image) {
 	let inventory_item = $(".inventory_item").eq(9 - slot);
 
 	if (!inventory_item)
@@ -22,7 +22,7 @@ Events.on("AddInventoryItem", function(slot, name, image) {
 	inventory_item.show();
 });
 
-Events.on("RemoveInventoryItem", function(slot) {
+Events.Subscribe("RemoveInventoryItem", function(slot) {
 	let inventory_item = $(".inventory_item").eq(9 - slot);
 
 	if (!inventory_item)

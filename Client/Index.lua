@@ -27,7 +27,7 @@ WeaponHUD = WebUI("InventoryHUD", "file:///UI/index.html")
 SetupUI()
 
 -- Catches KeyUp event to see if it was pressed any Inventory Shortcut key
-Client.Subscribe("KeyUp", function(KeyName)
+Input.Subscribe("KeyUp", function(KeyName)
 	local slot = -1
 
 	if (InventoryKeyBinding[KeyName]) then
